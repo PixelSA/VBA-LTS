@@ -7,6 +7,7 @@ Sub RC_GoTo_Invoicing()
     Dim lastName As String
     Dim boatName As String
     Dim invoiceWs As Workbook
+    Dim ws As Worksheet
     
     Dim basePath As String
     Dim fullPath As String
@@ -28,10 +29,20 @@ Sub RC_GoTo_Invoicing()
         fullPath = basePath & boatName & "\Bookings\FY 2023\FY 2023 " & boatName & " Charters.xlsm"
     
         Set invoiceWs = Workbooks.Open(fullPath)
-    
-        If Not invoiceWs Is Nothing Then
-            invoiceWs.Sheets(lastName).Activate
+        
+        If invoiceWs Is Nothing Then
+            MsgBox "Invoicing workbook not found for " & boatName & "."
+        Else
+            On Error GoTo SheetError
+            Set ws = invoiceWs.Sheets(lastName)
+            If ws Is Nothing Then
+                MsgBox "Specified sheet (" & lastName & ") was not found."
+                invoiceWs.Activate
+            Else
+                invoiceWs.Sheets(lastName).Activate
+            End If
         End If
+        
     ElseIf ActiveSheet.name = "RevByBoatByDay" Then
         boatName = ActiveSheet.Cells(1, ActiveCell.Column)
         fullName = ActiveCell.Value
@@ -46,9 +57,25 @@ Sub RC_GoTo_Invoicing()
         fullPath = basePath & boatName & "\Bookings\FY 2023\FY 2023 " & boatName & " Charters.xlsm"
 
         Set invoiceWs = Workbooks.Open(fullPath)
-    
-        If Not invoiceWs Is Nothing Then
-            invoiceWs.Sheets(lastName).Activate
+        
+        If invoiceWs Is Nothing Then
+            MsgBox "Invoicing workbook not found for " & boatName & "."
+        Else
+            On Error GoTo SheetError
+            Set ws = invoiceWs.Sheets(lastName)
+            If ws Is Nothing Then
+                MsgBox "Specified sheet (" & lastName & ") was not found."
+                invoiceWs.Activate
+            Else
+                invoiceWs.Sheets(lastName).Activate
+            End If
         End If
     End If
+    
+    Exit Sub
+
+SheetError:
+    MsgBox "Specified sheet (" & lastName & ") was not found."
+    On Error GoTo 0
+
 End Sub
