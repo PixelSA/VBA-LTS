@@ -1,6 +1,6 @@
 Sub RC_Remove_FCM()
     
-    Dim ws          As Worksheet
+    Dim ws As Worksheet
         
         ' for looping
         Dim startingRow As Integer
