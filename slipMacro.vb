@@ -5,7 +5,7 @@ Sub QAM_FCMslipCalc()
         Exit Sub    'bail out
     End If
     
-    MsgBox ("Running FCMslipCalc()... Nic's code goes here...")
+    MsgBox ("Running FCMslipCalc()...")
     
 Dim ws          As Worksheet
     
